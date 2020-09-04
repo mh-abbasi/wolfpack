@@ -2,19 +2,39 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Contracts\Pack as PackInterface;
+use App\Contracts\Packable as PackableInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class PackController extends Controller
 {
+
+    private $packHandler = null;
+    private $wolfHandler = null;
+
+    public function __construct(PackInterface $pack,PackableInterface $wolf)
+    {
+        $this->packHandler = $pack;
+        $this->wolfHandler = $wolf;
+    }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/packs",
+     *     tags={"Pack"},
+     *     summary="Returns all the packs",
+     *     description="Returns list of the packs stored in the database",
+     *     @OA\Response(
+     *         response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Pack"))
+     *     )
+     * )
      */
     public function index()
     {
-        //
+        return $this->packHandler->index();
     }
 
     /**
