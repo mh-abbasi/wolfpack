@@ -23,6 +23,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app->bind(
+            'App\Contracts\Pack',
+            'App\Services\WolfPack'
+        );
+        $this->app->bind(
+            'App\Contracts\Packable',
+            'App\Services\Wolf'
+        );
     }
 }

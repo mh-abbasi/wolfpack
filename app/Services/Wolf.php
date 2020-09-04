@@ -48,6 +48,19 @@ class Wolf implements Packable
     }
 
     /**
+     * Get a wolf by Its ID
+     * @param $wolfId
+     * @return WolfModel|null
+     */
+    public function getById($wolfId)
+    {
+        if( $this->wolf !== null && $this->wolf->id == $wolfId ) {
+            return $this->wolf;
+        }
+        return WolfModel::findOrFail($wolfId);
+    }
+
+    /**
      * Update a wolf using payload
      *
      * @param $wolfId
@@ -68,19 +81,6 @@ class Wolf implements Packable
     public function index()
     {
         return WolfModel::all();
-    }
-
-    /**
-     * Get a wolf by Its ID
-     * @param $wolfId
-     * @return WolfModel|null
-     */
-    public function getById($wolfId)
-    {
-        if( $this->wolf !== null && $this->wolf->id == $wolfId ) {
-            return $this->wolf;
-        }
-        return WolfModel::findOrFail($wolfId);
     }
 
     /**
