@@ -198,4 +198,38 @@ class PackController extends Controller
 
     }
 
+    /**
+     * @OA\Post(
+     *     path="/packs/{id}/removeWolf",
+     *     tags={"Pack"},
+     *     summary="Add a wolf to pack",
+     *     description="Adding a wolf to a pack using its ID",
+     *     @OA\Response(
+     *         response=200,
+     *          description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *          description="Not found",
+     *     )
+     * )
+     * @param Request $request
+     * @param int $packId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeWolfFromPack(Request $request, $packId)
+    {
+        try {
+            $this->wolfHandler->removeFromPack($request->get('id'), $packId);
+            return response()->json([
+                "message" => trans("Wolf deleted from the pack!")
+            ], 200);
+        } catch (Exception $e) {
+            if( $e instanceof ModelNotFoundException ) {
+                throw new ModelNotFoundException;
+            }
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 }
