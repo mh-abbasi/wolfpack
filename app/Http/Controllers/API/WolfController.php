@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWolfRequest;
 use App\Http\Requests\UpdateWolfRequest;
 use App\Wolf;
-use Illuminate\Http\Request;
+use Exception;
 
 class WolfController extends Controller
 {
@@ -146,13 +146,31 @@ class WolfController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/wolves/{id}",
+     *     tags={"Wolf"},
+     *     summary="Delete a wolf",
+     *     description="Delete a wolf using its ID",
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *     @OA\Response(
+     *         response=200,
+     *          description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *          description="Not found",
+     *     )
+     * )
+     * @param int $wolfId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy($wolfId)
     {
-        //
+        try {
+            $this->wolfHandler->destroy($wolfId);
+            return response()->json(['message'=> trans('Wolf has been deleted successfully!')], 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
