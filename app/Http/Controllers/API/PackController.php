@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Contracts\Pack as PackInterface;
 use App\Contracts\Packable as PackableInterface;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePackRequest;
 use Illuminate\Http\Request;
 
 class PackController extends Controller
@@ -38,14 +39,38 @@ class PackController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @OA\Post(
+     *     path="/packs",
+     *     tags={"Pack"},
+     *     summary="Create a pack",
+     *     description="Create a pack using desired payload",
+     *     @OA\Response(
+     *         response=201,
+     *          description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *          description="Payload errors",
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *          description="Saving errors",
+     *     )
+     * )
+     * @param StorePackRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(StorePackRequest $request)
     {
-        //
+        try {
+            $pack = $this->packHandler->store($request->all());
+            return response()->json([
+                "message" => trans("Pack has been created successfully!"),
+                "pack" => $pack
+            ], 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**
