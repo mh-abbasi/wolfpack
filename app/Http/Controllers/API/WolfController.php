@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Contracts\Packable as PackableInterface;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreWolfRequest;
 use Illuminate\Http\Request;
 
 class WolfController extends Controller
@@ -36,14 +37,39 @@ class WolfController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @OA\Post(
+     *     path="/wolves",
+     *     tags={"Wolf"},
+     *     summary="Create a wolf",
+     *     description="Create a wolf using desired payload",
+     *     @OA\Response(
+     *         response=201,
+     *          description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *          description="Payload errors",
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *          description="Saving errors",
+     *     )
+     * )
+     * @param StoreWolfRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(StoreWolfRequest $request)
     {
-        //
+
+        try {
+            $wolf = $this->wolfHandler->store($request->all());
+            return response()->json([
+                "message" => trans("Wolf has been created successfully!"),
+                "wolf" => $wolf
+            ], 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**
