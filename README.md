@@ -2,7 +2,7 @@
 
 ## About Project
 
-This app developed to Create, Read, Update and Delete two main entities; Wolf and Pack.
+This app is developed to Create, Read, Update and Delete two main entities; Wolf and Pack.
 There is another functionality to Add/Remove Wolf to/from Pack.
 
 As mentioned there are two entities in this project right now:
@@ -47,6 +47,11 @@ server it using PHP built-in web server by running ``php artisan server`` comman
 
 After running the project you can find the swagger UI under the address ``http://YOURADDRESS/api/documentation``.
 
+### Way to go
+
+- Add a docker compose file for dockerizing the application itself and an instance of MySQL.
+- Complete the OpenApi annotations in the project.
+- Add more tests
 
 ### Packages Used
 
