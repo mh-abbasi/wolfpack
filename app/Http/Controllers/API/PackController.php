@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePackRequest;
 use App\Http\Requests\UpdatePackRequest;
 use App\Pack;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class PackController extends Controller
@@ -161,4 +162,40 @@ class PackController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    /**
+     * @OA\Post(
+     *     path="/packs/{id}/addWolf",
+     *     tags={"Pack"},
+     *     summary="Add a wolf to pack",
+     *     description="Adding a wolf to a pack using its ID",
+     *     @OA\Response(
+     *         response=200,
+     *          description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *          description="Not found",
+     *     )
+     * )
+     * @param Request $request
+     * @param int $packId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addWolfToPack(Request $request, $packId)
+    {
+        try {
+            $this->wolfHandler->addToPack($request->get('id'), $packId);
+            return response()->json([
+                "message" => trans("Wolf added to the pack!")
+            ], 200);
+        } catch (Exception $e) {
+            if( $e instanceof ModelNotFoundException ) {
+                throw new ModelNotFoundException;
+            }
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+    }
+
 }
