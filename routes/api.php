@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResources([
+    'wolves' => 'API\WolfController',
+    'packs' => 'API\PackController',
+]);
+
+Route::prefix('packs')->group(function() {
+    Route::post('/{pack}/addWolf','API\PackController@addWolfToPack');
+    Route::post('/{pack}/removeWolf','API\PackController@removeWolfFromPack');
+});
