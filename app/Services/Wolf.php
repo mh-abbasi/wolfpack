@@ -126,6 +126,6 @@ class Wolf implements Packable
         if( !$pack->wolves->find($wolfId) ) {
             throw new \Exception( trans("Wolf was not in the pack!"));
         }
-        return $pack->wolves()->detach($wolf->id);.
+        return $pack->wolves()->detach($wolf->id);
     }
 }
