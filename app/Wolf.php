@@ -27,4 +27,10 @@ class Wolf extends Model
     protected $fillable = ['name','gender', 'birthdate', 'location'];
     protected $hidden = ['pivot'];
 
+
+
+    public function packs()
+    {
+        return $this->belongsToMany(Pack::class);
+    }
 }
