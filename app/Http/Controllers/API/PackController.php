@@ -6,6 +6,8 @@ use App\Contracts\Pack as PackInterface;
 use App\Contracts\Packable as PackableInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePackRequest;
+use App\Http\Requests\UpdatePackRequest;
+use App\Pack;
 use Illuminate\Http\Request;
 
 class PackController extends Controller
@@ -74,26 +76,62 @@ class PackController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/packs/{Id}",
+     *     tags={"Pack"},
+     *     summary="Get a pack",
+     *     description="Get a pack details by its ID",
+     *     @OA\Response(
+     *         response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Pack")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *          description="Not found",
+     *     )
+     * )
+     * @param int $packId
+     * @return Pack|\Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show($packId)
     {
-        //
+        $pack = $this->packHandler->getById($packId);
+        return response()->json($pack
+            , 200);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Put(
+     *     path="/packs/{id}",
+     *     tags={"Pack"},
+     *     summary="Update a pack",
+     *     description="Update a pack using its ID and payload",
+     *     @OA\Response(
+     *         response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Pack")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *          description="Not found",
+     *     )
+     * )
+     * @param UpdatePackRequest $request
+     * @param int $packId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePackRequest $request, $packId)
     {
-        //
+        try {
+            $pack = $this->packHandler->update($packId, $request->all());
+            return response()->json([
+                "message" => trans("Pack has been updated successfully!"),
+                "pack" => $pack
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**
