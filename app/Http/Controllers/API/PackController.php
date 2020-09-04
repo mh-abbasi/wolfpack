@@ -135,13 +135,30 @@ class PackController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Delete(
+     *     path="/packs/{id}",
+     *     tags={"Pack"},
+     *     summary="Delete a pack",
+     *     description="Delete a pack using its ID",
+     *     @OA\Response(
+     *         response=200,
+     *          description="successful operation",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *          description="Not found",
+     *     )
+     * )
+     * @param int $packId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy($packId)
     {
-        //
+        try {
+            $this->packHandler->destroy($packId);
+            return response()->json(['message' => trans('Pack has been deleted successfully!')], 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
