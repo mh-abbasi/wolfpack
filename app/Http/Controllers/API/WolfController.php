@@ -2,19 +2,37 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Contracts\Packable as PackableInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class WolfController extends Controller
 {
+
+    private $wolfHandler = null;
+
+    public function __construct(PackableInterface $wolf)
+    {
+        $this->wolfHandler = $wolf;
+    }
+
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/wolves",
+     *     tags={"Wolf"},
+     *     summary="Returns all the wolves",
+     *     description="Returns list of the wolves stored in the database",
+     *     @OA\Response(
+     *         response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Wolf"))
+     *     )
+     * )
      */
     public function index()
     {
-        //
+        return $this->wolfHandler->index();
     }
 
     /**
