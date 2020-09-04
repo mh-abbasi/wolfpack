@@ -42,12 +42,23 @@ You can install all the requirements manually based on your operating system or 
 3. Run ``composer -vvv install`` in the project root directory
 4. Create a database in your MySQL database and put the database name and credentials in ``.env`` file.
 5. Run ``php artisan migrate`` to migrate the tables
-6. You can server the application using any web servers like Apache, Nginx, LightSpeed, etc or just
+6. You can server the application using any web servers like Apache, Nginx, LiteSpeed, etc or just
 server it using PHP built-in web server by running ``php artisan server`` command.
 
 After running the project you can find the swagger UI under the address ``http://YOURADDRESS/api/documentation``.
 
 
-### Packages used
+### Packages Used
 
 - **[L5 Swagger](https://github.com/DarkaOnLine/L5-Swagger)**
+
+
+### Useful Links
+
+- **[Lravel](https://laravel.com/)**
+- **[Laragon](https://laragon.org/)**
+- **[WampServer](https://www.wampserver.com/en/)**
+- **[XAMPP](https://www.apachefriends.org/index.html)**
+- **[Nginx](https://www.nginx.com/)**
+- **[Apache](https://httpd.apache.org/)**
+- **[LiteSpeed](https://www.litespeedtech.com/products/litespeed-web-server)**
