@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Contracts\Packable as PackableInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWolfRequest;
+use App\Http\Requests\UpdateWolfRequest;
 use App\Wolf;
 use Illuminate\Http\Request;
 
@@ -100,15 +101,48 @@ class WolfController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Put(
+     *     path="/wolves/{id}",
+     *     tags={"Wolf"},
+     *     summary="Update a wolf",
+     *     description="Update a wolf using its ID and payload",
+     *      @OA\Parameter(
+     *          name="id", required=true, in="path", @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\MediaType(mediaType="application/json",
+     *                  @OA\Schema(
+     *                      type="object",
+     *                      ref="#/components/schemas/Wolf"
+     *                  )
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Wolf")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *          description="Not found",
+     *     )
+     * )
+     * @param UpdateWolfRequest $request
+     * @param int $wolfId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateWolfRequest $request, $wolfId)
     {
-        //
+        try {
+            $wolf = $this->wolfHandler->update($wolfId, $request->all());
+            return response()->json([
+                "message" => trans("Wolf has been updated successfully!"),
+                "wolf" => $wolf
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
     }
 
     /**
