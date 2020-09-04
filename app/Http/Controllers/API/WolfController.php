@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Contracts\Packable as PackableInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWolfRequest;
+use App\Wolf;
 use Illuminate\Http\Request;
 
 class WolfController extends Controller
@@ -73,14 +74,29 @@ class WolfController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/wolves/{Id}",
+     *     tags={"Wolf"},
+     *     summary="Get a wolf",
+     *     description="Get a wolf details by its ID",
+     *     @OA\Response(
+     *         response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Wolf")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *          description="Not found",
+     *     )
+     * )
+     * @param int $wolfId
+     * @return Wolf|\Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show($wolfId)
     {
-        //
+        $wolf = $this->wolfHandler->getById($wolfId);
+        return response()->json($wolf
+            , 200);
     }
 
     /**
