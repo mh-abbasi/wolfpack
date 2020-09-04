@@ -1,0 +1,341 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "WolfPack Assignment API Documentation",
+        "description": "You can find all the available endpoints over here",
+        "contact": {
+            "email": "mh.abbasi2006@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://wolfpack-repo.local/api/",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/packs": {
+            "get": {
+                "tags": [
+                    "Pack"
+                ],
+                "summary": "Returns all the packs",
+                "description": "Returns list of the packs stored in the database",
+                "operationId": "App\\Http\\Controllers\\API\\PackController::index",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Pack"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Pack"
+                ],
+                "summary": "Create a pack",
+                "description": "Create a pack using desired payload",
+                "operationId": "App\\Http\\Controllers\\API\\PackController::store",
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "422": {
+                        "description": "Payload errors"
+                    },
+                    "500": {
+                        "description": "Saving errors"
+                    }
+                }
+            }
+        },
+        "/packs/{Id}": {
+            "get": {
+                "tags": [
+                    "Pack"
+                ],
+                "summary": "Get a pack",
+                "description": "Get a pack details by its ID",
+                "operationId": "App\\Http\\Controllers\\API\\PackController::show",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Pack"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/packs/{id}": {
+            "put": {
+                "tags": [
+                    "Pack"
+                ],
+                "summary": "Update a pack",
+                "description": "Update a pack using its ID and payload",
+                "operationId": "App\\Http\\Controllers\\API\\PackController::update",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Pack"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Pack"
+                ],
+                "summary": "Delete a pack",
+                "description": "Delete a pack using its ID",
+                "operationId": "App\\Http\\Controllers\\API\\PackController::destroy",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/packs/{id}/addWolf": {
+            "post": {
+                "tags": [
+                    "Pack"
+                ],
+                "summary": "Add a wolf to pack",
+                "description": "Adding a wolf to a pack using its ID",
+                "operationId": "App\\Http\\Controllers\\API\\PackController::addWolfToPack",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/packs/{id}/removeWolf": {
+            "post": {
+                "tags": [
+                    "Pack"
+                ],
+                "summary": "Add a wolf to pack",
+                "description": "Adding a wolf to a pack using its ID",
+                "operationId": "App\\Http\\Controllers\\API\\PackController::removeWolfFromPack",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/wolves": {
+            "get": {
+                "tags": [
+                    "Wolf"
+                ],
+                "summary": "Returns all the wolves",
+                "description": "Returns list of the wolves stored in the database",
+                "operationId": "App\\Http\\Controllers\\API\\WolfController::index",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Wolf"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Wolf"
+                ],
+                "summary": "Create a wolf",
+                "description": "Create a wolf using desired payload",
+                "operationId": "App\\Http\\Controllers\\API\\WolfController::store",
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "422": {
+                        "description": "Payload errors"
+                    },
+                    "500": {
+                        "description": "Saving errors"
+                    }
+                }
+            }
+        },
+        "/wolves/{Id}": {
+            "get": {
+                "tags": [
+                    "Wolf"
+                ],
+                "summary": "Get a wolf",
+                "description": "Get a wolf details by its ID",
+                "operationId": "App\\Http\\Controllers\\API\\WolfController::show",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Wolf"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/wolves/{id}": {
+            "put": {
+                "tags": [
+                    "Wolf"
+                ],
+                "summary": "Update a wolf",
+                "description": "Update a wolf using its ID and payload",
+                "operationId": "App\\Http\\Controllers\\API\\WolfController::update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Wolf"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Wolf"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Wolf"
+                ],
+                "summary": "Delete a wolf",
+                "description": "Delete a wolf using its ID",
+                "operationId": "App\\Http\\Controllers\\API\\WolfController::destroy",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Pack": {
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Wolf": {
+                "required": [
+                    "name",
+                    "gender",
+                    "birthdate",
+                    "location"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Rex"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "maxLength": 1,
+                        "example": "m"
+                    },
+                    "birthdate": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2020-09-03"
+                    },
+                    "location": {
+                        "type": "string",
+                        "example": "51.4483,5.4728"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
